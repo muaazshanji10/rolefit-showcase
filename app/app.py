@@ -122,6 +122,7 @@ tab_search, tab_role, tab_sim, tab_nl, tab_proj = st.tabs(
 
 with tab_search:
     st.subheader("Player search")
+    st.markdown("Look up any player from the 2015/16 Premier League season and see their basic profile at a glance — position, games played, and a few headline stats. A good starting point if you already have a name in mind.")
     query = st.text_input("Player name contains", "")
     df = features.copy()
     if query:
@@ -138,6 +139,7 @@ with tab_search:
 
 with tab_role:
     st.subheader("Role fit: how closely does a player match each hand-built role?")
+    st.markdown("Players naturally fall into groups based on how they actually play — not just their listed position. This shows which of those playing-style groups (e.g. \"ball-winning midfielder\" or \"advanced forward\") a player best matches, useful for spotting players who fit a tactical role even if their official position label doesn't obviously say so.")
     player = st.selectbox("Player", sorted(roles["player_name"].unique()), key="role_player")
     row = roles[roles["player_name"] == player].iloc[0]
     X = row[FEATURES].fillna(0).to_numpy().astype(float)
@@ -157,6 +159,7 @@ with tab_role:
 
 with tab_sim:
     st.subheader("Find players like X")
+    st.markdown("Pick a player and get a shortlist of others with a similar statistical profile — handy for finding a cheaper or more available alternative to a player you like, or simply for comparing options.")
     pool, Xz = similarity_pool(features)
     player = st.selectbox("Player", sorted(pool["player_name"].unique()), key="sim_player")
     n = st.slider("Number of results", 3, 15, 5)
@@ -182,6 +185,7 @@ with tab_sim:
 
 with tab_nl:
     st.subheader("Describe the player you want")
+    st.markdown("No need to know the stats — just describe what you're after in plain English (e.g. \"a tough tackling defensive midfielder\") and this turns that description into a ranked list of real players who fit it best.")
     st.caption("A real Anthropic API call converts your brief into a weight over the same 17 features used for role discovery, then ranks every eligible player by that weighted profile.")
     brief = st.text_area("Brief", "A tough ball-winning defensive midfielder who keeps possession simple.", height=80)
     if st.button("Generate weights & rank players"):
@@ -240,6 +244,7 @@ with tab_nl:
 
 with tab_proj:
     st.subheader("Goals/90: raw vs shrunk, with uncertainty")
+    st.markdown("A player's raw scoring rate can be misleading if they've only played a handful of games — a couple of lucky goals can make someone look like a world-beater. This shows a more realistic estimate alongside the raw number, plus a range showing how confident we actually are in it, so you can tell a proven scorer from a small-sample fluke.")
     st.caption("Empirical-Bayes shrinkage pulls small-sample players toward the population mean; error bars are bootstrap 95% CIs on the raw rate.")
     min_min = st.slider("Minimum minutes played", 90, 3000, 900, step=90)
     d = shrinkage[shrinkage["total_minutes"] >= min_min].sort_values("shrunk_p90", ascending=False).head(15)
