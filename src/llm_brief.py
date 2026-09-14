@@ -79,7 +79,7 @@ def brief_to_weights(brief: str) -> dict:
         system=SYSTEM_PROMPT,
         messages=[{"role": "user", "content": f"Brief: {brief}"}],
     )
-    text = resp.content[0].text.strip()
+    text = next(b.text for b in resp.content if b.type == "text").strip()
     if text.startswith("```"):
         text = text.strip("`")
         text = text[text.find("{"):text.rfind("}") + 1]
