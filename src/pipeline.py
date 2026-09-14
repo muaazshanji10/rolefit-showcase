@@ -4,7 +4,7 @@ RoleFit pipeline: StatsBomb open-data JSON -> DuckDB bronze/silver/gold.
 Scope (v1): Premier League 2015/16 only (competition_id=2, season_id=27).
 
 Minutes-played method: derived from events (Starting XI, Substitution,
-Half End, and card events), NOT from lineups[].positions[].from/to —
+Half End, and card events), NOT from lineups[].positions[].from/to -
 those raw timestamps show period-boundary inconsistencies (stoppage-time
 entries mislabelled with the next period's index) that make them
 unreliable for a v1 pass. Event `minute`/`second` fields are the
