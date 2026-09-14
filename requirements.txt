@@ -1,0 +1,12 @@
+pandas
+duckdb
+numpy
+scikit-learn
+lightgbm
+shap
+streamlit
+anthropic
+scipy
+matplotlib
+python-dotenv
+requests
