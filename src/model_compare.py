@@ -52,7 +52,7 @@ def half_season_stats(con, week_filter: str, label: str) -> pd.DataFrame:
         WHERE e.player_id IS NOT NULL AND {week_filter}
     """).df()
     minutes = con.execute(f"""
-        SELECT pm.player_id, ANY_VALUE(pm.player_name) AS player_name,
+        SELECT pm.player_id, MODE(pm.player_name) AS player_name,
                SUM(pm.minutes_played) AS minutes
         FROM silver_player_minutes pm
         JOIN bronze_matches m USING (match_id)

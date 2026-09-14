@@ -242,7 +242,12 @@ def build():
     con.execute("""
         CREATE OR REPLACE TABLE gold_player_season AS
         WITH minutes_agg AS (
-            SELECT player_id, ANY_VALUE(player_name) AS player_name,
+            -- MODE, not ANY_VALUE: StatsBomb's own lineup files spell some
+            -- names inconsistently across matches (e.g. N'Golo Kante appears
+            -- with a single vs. doubled apostrophe in different files for the
+            -- same player_id). Aggregation is safe either way since it's all
+            -- keyed on player_id, but display name should pick the common spelling.
+            SELECT player_id, MODE(player_name) AS player_name,
                    COUNT(DISTINCT match_id) AS matches_played,
                    SUM(minutes_played) AS total_minutes,
                    MODE(primary_position) AS primary_position
