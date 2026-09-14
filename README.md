@@ -2,7 +2,7 @@
 
 A football recruitment analytics showcase built on StatsBomb's open data: role discovery, uncertainty-aware player output estimates, model comparison for predicting future form, and a natural-language "describe the player you want" interface - all backed by real per-match event data, not synthetic stats.
 
-**Live app:** _pending deploy - see "Deploying" below_
+**Live app:** share.streamlit.io
 **Repo:** https://github.com/muaazshanji10/rolefit-showcase
 
 **Screenshot:** pending - no GUI/browser automation was available in the build environment to capture one honestly. Will be added as `docs/screenshot.png` once the app is deployed and clicked through.
